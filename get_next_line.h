@@ -6,7 +6,7 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:58:04 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/07 15:29:50 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/08 13:41:04 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include <unistd.h>
-
+# define BUFFER_SIZE 256
 char	*get_next_line(int fd);
 
 #endif
