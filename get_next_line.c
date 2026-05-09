@@ -6,35 +6,51 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:57:39 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/08 19:28:35 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/09 17:36:32 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*read_untill_include_newline(int fd, char *str);
+char	*cut_at_newline(char *str);
+char	*update_str(char *str);
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*str;
+
+	if (fd < 0)
+		return (NULL);
+	str = read_untill_include_newline(fd, str);
+	if (!str || *str == '\0')
+	{
+		free(str);
+		str = NULL;
+		return (NULL);
+	}
+	line = cut_at_newline(str);
+	str = update_str(str);
+	return (line);
+}
+
 char	*read_untill_include_newline(int fd, char *str)
 {
 	char	*buff;
-	int		read_bytes;
-	char	*tmp;
+	int		bytes_read;
 
 	buff = malloc(BUFFER_SIZE + 1);
 	if (!buff)
-		return (NULL);
-	while (!ft_strchr(str, '\n'))
+		return (free(str), NULL);
+	bytes_read = 1;
+	while (!ft_strchr(str, '\n') && bytes_read != 0)
 	{
-		read_bytes = read(fd, buff, BUFFER_SIZE);
-		if (read_bytes == -1)
-			return (NULL);
-		buff[read_bytes] = '\0';
-		if (!str)
-		{
-			str = malloc(1);
-			if (!str)
-				return (NULL);
-			str[0] = '\0';
-		}
-		str = ft_strjoin(str, buff);
+		bytes_read = read(fd, buff, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (free(buff), free(str), NULL);
+		buff[bytes_read] = '\0';
+		str = ft_strjoin_adv(str, buff);
 	}
 	free(buff);
 	return (str);
@@ -44,19 +60,25 @@ char	*cut_at_newline(char *str)
 {
 	size_t	i;
 	char	*line;
-	
+
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
-	line = malloc(i + 1);
+	line = malloc(i + 2);
+	if (!line)
+		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '\n')
 	{
 		line[i] = str[i];
 		i++;
 	}
-	line[i] = '\n';
-	line[i + 1] = '\0';
+	if (str[i] == '\n')
+	{
+		line[i] = '\n';
+		i++;
+	}
+	line[i] = '\0';
 	return (line);
 }
 
@@ -65,7 +87,7 @@ char	*update_str(char *str)
 	char	*new_str;
 	size_t	i;
 	size_t	j;
-	
+
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
@@ -87,17 +109,23 @@ char	*update_str(char *str)
 	free(str);
 	return (new_str);
 }
-	
 
-char	*get_next_line(int fd)
+
+/*
+#include <fcntl.h>
+#include <stdio.h>
+
+int	main(void)
 {
-	char		*line;
-	static char	*str;
+	int		fd;
+	char	*line;
 
-	if (fd < 0)
-		return (NULL);
-	str = read_untill_include_newline(fd, str);
-	line = cut_at_newline(str);
-	
-	return (line);
-}
+	fd = open("test.txt", O_RDONLY);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+}*/
