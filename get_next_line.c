@@ -6,7 +6,7 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:57:39 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/10 21:05:43 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/10 21:33:31 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str = read_until_include_newline(fd, str);
-	if (!str || *str == '\0')
+	if (!str)
+	{
+		str = NULL;
+		return (NULL);
+	}
+	if (*str == '\0')
 	{
 		free(str);
 		str = NULL;
@@ -118,7 +123,7 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = open("test.txt", O_RDONLY);
+	fd = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", line);
