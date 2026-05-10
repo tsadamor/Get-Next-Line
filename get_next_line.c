@@ -6,24 +6,24 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:57:39 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/09 17:36:32 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/10 21:05:43 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_untill_include_newline(int fd, char *str);
+char	*read_until_include_newline(int fd, char *str);
 char	*cut_at_newline(char *str);
 char	*update_str(char *str);
 
 char	*get_next_line(int fd)
 {
-	char		*line;
 	static char	*str;
+	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = read_untill_include_newline(fd, str);
+	str = read_until_include_newline(fd, str);
 	if (!str || *str == '\0')
 	{
 		free(str);
@@ -35,7 +35,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-char	*read_untill_include_newline(int fd, char *str)
+char	*read_until_include_newline(int fd, char *str)
 {
 	char	*buff;
 	int		bytes_read;
@@ -109,8 +109,6 @@ char	*update_str(char *str)
 	free(str);
 	return (new_str);
 }
-
-
 /*
 #include <fcntl.h>
 #include <stdio.h>
