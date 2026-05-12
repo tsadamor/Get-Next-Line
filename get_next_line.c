@@ -6,7 +6,7 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:57:39 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/12 14:04:09 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:24:10 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	str = read_until_include_newline(fd, str);
 	if (!str)
-	{
-		str = NULL;
 		return (NULL);
-	}
 	if (*str == '\0')
 	{
 		free(str);
