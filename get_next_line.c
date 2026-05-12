@@ -6,7 +6,7 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:57:39 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/10 21:33:31 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:04:09 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = 0;
+	fd = open("test.txt", O_RDONLY);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("%s", line);

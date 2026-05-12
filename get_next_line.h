@@ -6,12 +6,16 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:58:04 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/09 17:27:47 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:05:39 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # include <unistd.h>
 # include <stdlib.h>
