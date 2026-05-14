@@ -6,7 +6,7 @@
 /*   By: tsadamor <tsadamor@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 14:57:39 by tsadamor          #+#    #+#             */
-/*   Updated: 2026/05/12 14:24:10 by tsadamor         ###   ########.fr       */
+/*   Updated: 2026/05/14 12:43:53 by tsadamor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,10 @@ char	*update_str(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\0')
-	{
-		free(str);
-		return (NULL);
-	}
+		return (free(str), NULL);
 	new_str = malloc(ft_strlen(str) - i + 1);
+	if (!new_str)
+		return (NULL);
 	i++;
 	j = 0;
 	while (str[i])
@@ -108,8 +107,7 @@ char	*update_str(char *str)
 		j++;
 	}
 	new_str[j] = '\0';
-	free(str);
-	return (new_str);
+	return (free(str), new_str);
 }
 /*
 #include <fcntl.h>
